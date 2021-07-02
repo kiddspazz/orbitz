@@ -1,8 +1,9 @@
-const renderOrbits = (parentContainerId) => {
+export const renderOrbitzInElement = (parentContainerId) => {
   const parentContainer = document.getElementById(parentContainerId);
-  const H = window.innerHeight;
-  const W = window.innerWidth;
+  const H = 512;
+  const W = 700;
   const canvas = document.createElement('canvas');
+  canvas.style = "background: grey; border: 1px solid black;";
 
   parentContainer.append(canvas);
 
@@ -16,7 +17,7 @@ const renderOrbits = (parentContainerId) => {
 
   const circum = 2 * Math.PI;
 
-  const objects = [];
+  let objects = [];
 
   class Sphere {
     constructor(x, y, mass, v) {
@@ -99,8 +100,8 @@ const renderOrbits = (parentContainerId) => {
   };
 
   let sun = new Sphere(W/2, H/2, 30000, new V(0,0));
-  let planet1 = new Sphere(W/2 - 200, H/2 - 200, 400, new V(-1,1));
-  let planet2 = new Sphere(W/2 + 100, H/2 + 100, 400, new V(-1.4,1.4));
+  let planet1 = new Sphere(W/2 - 200, H/2 - 200, 400, new V(-.4,.4));
+  let planet2 = new Sphere(W/2 + 100, H/2 + 100, 400, new V(-.8,.8));
 
   objects.push(sun);
   objects.push(planet1);
