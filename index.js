@@ -99,9 +99,9 @@ export const renderOrbitzInElement = (parentContainerId) => {
     };
   };
 
-  let sun = new Sphere(W/2, H/2, 30000, new V(0,0));
-  let planet1 = new Sphere(W/2 - 200, H/2 - 200, 400, new V(-.4,.4));
-  let planet2 = new Sphere(W/2 + 100, H/2 + 100, 400, new V(-.8,.8));
+  let sun = new Sphere(W/2, H/2, 40000, new V(0,0));
+  let planet1 = new Sphere(W/2 - 200, H/2 - 200, 400, new V(-.7,.7));
+  let planet2 = new Sphere(W/2 + 100, H/2 + 100, 400, new V(-1,1));
 
   objects.push(sun);
   objects.push(planet1);
