@@ -1,4 +1,14 @@
-export const renderOrbitzInElement = (parentContainerId) => {
+import V from './modules/vectors';
+
+function determineDistance(a, b) {
+  const d = { dis: null, dir: null };
+  const dir = a.center.minus(b.center);
+  d.dir = dir.norm();
+  d.dis = dir.length();
+  return d;
+}
+
+const renderOrbitzInElement = (parentContainerId) => {
   const parentContainer = document.getElementById(parentContainerId);
   const H = 512;
   const W = 700;
@@ -24,7 +34,9 @@ export const renderOrbitzInElement = (parentContainerId) => {
       this.center = new V(x, y);
       this.r = 10 + Math.min(25, mass / 400);
       this.mass = mass;
-      this.color = `rgb(${Math.min(255, (Math.floor(255 * this.mass / 1000)))},0,0)`;
+      this.color = `rgb(${
+        Math.min(255, (Math.floor((255 * this.mass) / 1000)))
+      },0,0)`;
       this.v = v;
     }
 
@@ -42,21 +54,13 @@ export const renderOrbitzInElement = (parentContainerId) => {
       o.forEach((e) => {
         const d = determineDistance(self, e);
         if (d.dis > 0) {
-          const g = d.dir.times(0.01 * e.mass / d.dis ** 2);
+          const g = d.dir.times((0.01 * e.mass) / d.dis ** 2);
           totalG = totalG.plus(g);
         }
       });
       this.v = this.v.minus(totalG);
       objects.push(this);
     }
-  }
-
-  function determineDistance(a, b) {
-    const d = { dis: null, dir: null };
-    const dir = a.center.minus(b.center);
-    d.dir = dir.norm();
-    d.dis = dir.length();
-    return d;
   }
 
   function tick() {
@@ -71,40 +75,6 @@ export const renderOrbitzInElement = (parentContainerId) => {
     window.requestAnimationFrame(tick);
   }
 
-  class V {
-    constructor(x, y) {
-      this.x = x;
-      this.y = y;
-    }
-
-    minus(v) {
-      return new V(this.x - v.x, this.y - v.y);
-    }
-
-    plus(v) {
-      return new V(this.x + v.x, this.y + v.y);
-    }
-
-    times(int) {
-      return new V(this.x * int, this.y * int);
-    }
-
-    norm() {
-      return new V(this.x / this.length(), this.y / this.length());
-    }
-
-    length() {
-      return (Math.sqrt((this.x * this.x) + (this.y * this.y)));
-    }
-
-    rotate(angle) {
-      return new V(
-        this.x * (Math.cos(angle)) - this.y * (Math.sin(angle)),
-        this.y * (Math.cos(angle)) + this.x * (Math.sin(angle)),
-      );
-    }
-  }
-
   const sun = new Sphere(W / 2, H / 2, 40000, new V(0, 0));
   const planet1 = new Sphere(W / 2 - 200, H / 2 - 200, 400, new V(-0.7, 0.7));
   const planet2 = new Sphere(W / 2 + 100, H / 2 + 100, 400, new V(-1, 1));
@@ -115,3 +85,5 @@ export const renderOrbitzInElement = (parentContainerId) => {
 
   window.requestAnimationFrame(tick);
 };
+
+export default renderOrbitzInElement;

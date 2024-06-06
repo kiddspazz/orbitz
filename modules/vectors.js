@@ -1,27 +1,35 @@
-module.exports = vector;
+class V {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
 
-function V(x, y) {
-  this.x = x;
-  this.y = y;
-  this._minus = function (v) {
+  minus(v) {
     return new V(this.x - v.x, this.y - v.y);
-  };
-  this._plus = function (v) {
+  }
+
+  plus(v) {
     return new V(this.x + v.x, this.y + v.y);
-  };
-  this._times = function (v, int) {
-    return V(v.x * int, v.y * int);
-  };
-  this._norm = function (v) {
-    return V(v.x / v.length(), v.y / v.length());
-  };
-  this._length = function (v) {
-    return (Math.sqrt((v.x * v.x) + (v.y * v.y)));
-  };
-  this._rotate = function (v, angle) {
-    return V(
-      v.x * (Math.cos(angle)) - v.y * (Math.sin(angle)),
-      v.y * (Math.cos(angle)) + v.x * (Math.sin(angle)),
+  }
+
+  times(int) {
+    return new V(this.x * int, this.y * int);
+  }
+
+  norm() {
+    return new V(this.x / this.length(), this.y / this.length());
+  }
+
+  length() {
+    return (Math.sqrt((this.x * this.x) + (this.y * this.y)));
+  }
+
+  rotate(angle) {
+    return new V(
+      this.x * (Math.cos(angle)) - this.y * (Math.sin(angle)),
+      this.y * (Math.cos(angle)) + this.x * (Math.sin(angle)),
     );
-  };
+  }
 }
+
+export default V;
